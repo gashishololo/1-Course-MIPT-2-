@@ -1,45 +1,37 @@
-import unittest
+#1
+#A = set('bqlpzlkwehrlulsdhfliuywemrlkjhsdlfjhlzxcovt')
+#B = set('zmxcvnboaiyerjhbziuxdytvasenbriutsdvinjhgik')
+#A.difference_update(B)
+#print (A)
 
-import lib
+#2
+#A = set('0123456789')
+#B = set('02468')
+#C = set('12345')
+#D = set('56789')
+#print (((A.difference(B)).intersection(C.difference(D))).union((D.difference(A)).intersection(B.difference(A))))
 
-
-class LibTest(unittest.TestCase):
-
-    """ def test_even(self):
-        self.assertEqual(lib.even(2), True)
-        self.assertEqual(lib.even(0), True)
-        self.assertEqual(lib.even(1), False)
-        self.assertEqual(lib.even(-1), False)
-        self.assertEqual(lib.even(-3), False)"""
-
-
-    '''def test_factorial(self):
-        self.assertEqual(lib.factorial(-1), 1)
-        self.assertEqual(lib.factorial(0), 1)
-        self.assertEqual(lib.factorial(-2), 1)
-        self.assertEqual(lib.factorial(4), 24)
-        self.assertEqual(lib.factorial(6), 720)
-        self.assertEqual(lib.factorial(5), 120)'''
-
-    '''def test_palindrome(self):
-        self.assertEqual(lib.palindrome('qwwq'), True)
-        self.assertEqual(lib.palindrome('rttr'), True)
-        self.assertEqual(lib.palindrome('true'), False)
-        self.assertEqual(lib.palindrome('false'), False)'''
-
-    '''def test_prime(self):
-        self.assertEqual(lib.prime(4), False)
-        self.assertEqual(lib.prime(1), True)'''
-
-    '''def test_sin(self):
-        self.assertEqual(lib.sin(0), 0)
-        self.asseretEqual(lib.sin(3.14/2), 1)
-        self.assertEqual(lib.sin(3.14/6), 0.5)'''
-    def test_sqrt(self):
-        self.assertEqual(lib.sqrt(9), 3)
-        self.assertEqual(lib.sqrt(1), 1)
-        self.assertEqual(lib.sqrt(0), 0)
-        self.assertEqual(lib.sqrt(-1), 0)
-        
-
-unittest.main(verbosity=2)
+#3
+#input = open('input.txt', 'r')
+#c=input.read()
+#l=''
+#while len(c)>0:
+#    if ord(c)== 46 or 44 or 63 or 33:
+#        c=' '
+#    l+=c
+#    c=input.read(1)
+#l=l.lower()
+#a=l.split()
+#b={}
+#for i in range (len(a)):
+#    if a[i] in b:
+#        b[a[i]]+=1
+#    else:
+#        b[a[i]]=1
+#s=0
+#m=''
+#for key in b:
+#    if b[key]>s:
+#        m=key
+#        s=b[key]
+#print (m)
