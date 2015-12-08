@@ -1,20 +1,20 @@
 class Matrix:
-    def __init__(self, *ems):
-        if len(ems) == 0: raise ValueError('Недостаточно параметров')
-        if type(ems[0]) not in [list, tuple]:
-            if len(ems) != 2:
-                raise ValueError('Вместо {} нужно два параметра'.format(len(ems)))
-            if not(type(ems[0])==type(ems[1])==int):
+    def __init__(self, other):
+        if len(other) == 0: raise ValueError('Недостаточно параметров')
+        if type(other[0]) not in [list, tuple]:
+            if len(other) != 2:
+                raise ValueError('Вместо {} нужно два параметра'.format(len(other)))
+            if not(type(other[0])==type(other[1])==int):
                 raise ValueError('Нужны целые числа')
-            if not(ems[0]>0 and ems[1]>0): raise ValueError('Нужны целые числа')
-            self.w, self.h = ems
-            self.__ems = [[0]*self.w for i in range(self.h)]
+            if not(other[0]>0 and other[1]>0): raise ValueError('Нужны целые числа')
+            self.w, self.h = other
+            self.__other = [[0]*self.w for i in range(self.h)]
         else:
-            ems=ems[0]
-            if len(ems) == 0: raise ValueError('Нельзя создать матрицу из ничего')
-            if not all(len(x) == len(ems[0]) for x in ems): raise ValueError('Другое количество элементов')
-            self.w, self.h = len(ems[0]), len(ems)
-            self.__ems = [list(i) for i in ems]
+            other=other[0]
+            if len(other) == 0: raise ValueError('Нельзя создать матрицу из ничего')
+            if not all(len(x) == len(other[0]) for x in other): raise ValueError('Другое количество элементов')
+            self.w, self.h = len(other[0]), len(other)
+            self.__other = [list(i) for i in other]
     get_m = lambda self: self.w
     get_n = lambda self: self.h
     get_size = lambda self: (self.w, self.h)
@@ -22,39 +22,39 @@ class Matrix:
     def invert(self):
         if not self.is_square(): raise ValueError('Можно делать только с квадратной матрицей')
         if (self.w, self.h) == (2, 2):
-            a, b, c, d = self.__ems[0] + self.__ems[1]
+            a, b, c, d = self.__other[0] + self.__other[1]
             det = a*d - b*c
             return Matrix(((d/det, -b/det), (-c/det, a/det)))
     def set(self,x, y, value):
-        self.__ems[y][x] = value
+        self.__other[y][x] = value
     def get(self, x, y):
-        return self.__ems[y][x]
+        return self.__other[y][x]
     def transpose(self):
-        return Matrix(list(zip(*self.__ems)))
+        return Matrix(list(zip(*self.__other)))
     def __str__(self):
-        return '\n'.join(['('+', '.join([str(self.__ems[i][j]) for j in range(self.w)])+')' for i in range(self.h)])
+        return '\n'.join(['('+', '.join([str(self.__other[i][j]) for j in range(self.w)])+')' for i in range(self.h)])
     def comparable(self, other):
         if type(other) != Matrix: raise ValueError('Можно сравнивать только матрицы, {} - это {}, а не матрица'.format(other, type(other)))
         return self.w == other.w and self.h == other.h
     def __eq__(self, other):
         if not self.comparable(other): raise ValueError('Нельзя сравнивать мтрицы разных размеров')
-        return all(all(self.__ems[i][j]==other.__ems[i][j] for j in range(len(self.__ems[0]))) for i in range(len(self.__ems)))
+        return all(all(self.__other[i][j]==other.__other[i][j] for j in range(len(self.__other[0]))) for i in range(len(self.__other)))
     def __add__(self, other):
         if not self.comparable(other): raise ValueError('Нельзя складывать матрицы разного размера')
-        return Matrix([[self.__ems[i][j]+other.__ems[i][j] for j in range(len(self.__ems[0]))] for i in range(len(self.__ems))])
+        return Matrix([[self.__other[i][j]+other.__other[i][j] for j in range(len(self.__other[0]))] for i in range(len(self.__other))])
     def __sub__(self, other):
         if not self.comparable(other): raise ValueError('Нельзя вычитать матрицы разного размера')
-        return Matrix([[self.__ems[i][j]-other.__ems[i][j] for j in range(len(self.__ems[0]))] for i in range(len(self.__ems))])
+        return Matrix([[self.__other[i][j]-other.__other[i][j] for j in range(len(self.__other[0]))] for i in range(len(self.__other))])
     def __cross(self, x, y):
-        return Matrix([row[:x]+row[x+1:] for row in self.__ems[:y] + self.__ems[y+1:]])
+        return Matrix([row[:x]+row[x+1:] for row in self.__other[:y] + self.__other[y+1:]])
     def __mul__(self, other):
         if type(other) not in [int, float, Matrix]: raise ValueError('Нельзя матрицу умножить на это', type(other))
         if type(other) == Matrix:
             other, self = self, other
             if self.w != other.h: raise ValueError('Эти матрицы нельзя умножить')
-            return Matrix([[sum(row1[i]*other.__ems[i][col2_ind] for i in range(self.w)) for col2_ind in range(other.w)] for row1 in self.__ems])
+            return Matrix([[sum(row1[i]*other.__other[i][col2_ind] for i in range(self.w)) for col2_ind in range(other.w)] for row1 in self.__ems])
         else:
-            return Matrix([[self.__ems[i][j]*other for j in range(self.w)] for i in range(self.h)])
+            return Matrix([[self.__other[i][j]*other for j in range(self.w)] for i in range(self.h)])
     def __truediv__(self, other):
         if type(other) in [int, float]:
             return self * (1/other)
@@ -62,6 +62,6 @@ class Matrix:
             raise ValueError()
     def determinant(self):
         if not self.is_square(): raise ValueError('Матрица не квадратная')
-        if self.w == 1: return self.__ems[0][0]
+        if self.w == 1: return self.__other[0][0]
         else:
-            return sum([(-1)**i * self.__ems[0][i] * self.__cross(i, 0).determinant() for i in range(self.w)])
+            return sum([(-1)**i * self.__other[0][i] * self.__cross(i, 0).determinant() for i in range(self.w)])
