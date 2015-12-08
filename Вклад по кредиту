@@ -1,10 +1,10 @@
+__author__ = 'student'
 from decimal import Decimal, getcontext
 
 
 getcontext().prec = 5
 S = Decimal(input())
 Sgr1 = S
-Sgr2 = S
 i = Decimal(input())
 t = int(input())
 I = Decimal((1+i/100)**Decimal(1/12)-1)
@@ -33,16 +33,17 @@ Vyplata_na_procent=[0]*12*t
 a=0
 while a<12*t-1:
     Ostatok_po_kreditu[a] = int(Decimal(Sgr1))
-    Vyplata_na_kredit[a] = int(Decimal(2*A - Sgr1 * I))
-    Vyplata_na_procent[a] = int(Decimal(Sgr1 * I+A))
+    Vyplata_na_kredit[a] = int(Decimal(A - Sgr1 * I))
+    Vyplata_na_procent[a] = int(Decimal(Sgr1 * I))
     a+=1
     Sgr1 = Sgr1 * (1 + I) - A
 Ostatok_po_kreditu[12*t-1] = 0
-Vyplata_na_kredit[12*t-1] = int(Decimal(A - Sgr1 * I))
-Vyplata_na_procent[12*t-1] = int(Decimal(Sgr1 * I))
+Vyplata_na_kredit[12*t-1] = 0
+Vyplata_na_procent[12*t-1] = 0
 import numpy as np
 import matplotlib.pyplot as plt
 a=np.arange(0,int(12*t),1)
 plt.plot(a, Ostatok_po_kreditu)
 plt.plot(a,Vyplata_na_kredit,a,Vyplata_na_procent)
 plt.show()
+
