@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 
 import networkx as nx
 
-# 1
+# 1   Here is an error: node 8 has no position. If 8 doesn`t mentioned, programm works normally...
 G=nx.cubical_graph()
 pos=nx.spring_layout(G) # positions for all nodes
 
