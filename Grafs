@@ -1,0 +1,37 @@
+import matplotlib.pyplot as plt
+
+import networkx as nx
+
+# 1
+G=nx.cubical_graph()
+pos=nx.spring_layout(G) # positions for all nodes
+
+# nodes
+nx.draw_networkx_nodes(G,pos,
+                       nodelist=[0,1,2,3,4,5,6,7,8],
+                       node_color='r',
+                       node_size=500,
+                   alpha=0.8)
+# edges
+nx.draw_networkx_edges(G,pos,
+                       edgelist=[(0,1),(1,2),(2,3),(0,7),(1,7),(2,7),(7,6),(3,6),(6,4),(4,5),(3,8)],
+                       width=8,alpha=0.5,edge_color='b')
+
+
+# some math labels
+labels={}
+labels[0]=r'$1$'
+labels[1]=r'$2$'
+labels[2]=r'$3$'
+labels[3]=r'$4$'(3,8)
+labels[4]=r'$5$'
+labels[5]=r'$6$'
+labels[6]=r'$7$'
+labels[7]=r'$8$'
+labels[8]=r'$9$'
+
+nx.draw_networkx_labels(G,pos,labels,font_size=16)
+
+plt.axis('off')
+plt.savefig("labels_and_colors.png") # save as png
+plt.show() # display
