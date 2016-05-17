@@ -1,8 +1,8 @@
 from tkinter import *
 
-cell = [[0 for row in range(61)] for col in range(81)]
-live = [[0 for row in range(61)] for col in range(81)]
-new_generation = [[0 for row in range(61)] for col in range(81)]
+cell = [[0 for row in range(61)] for col in range(162)]
+live = [[0 for row in range(61)] for col in range(162)]
+new_generation = [[0 for row in range(61)] for col in range(162)]
 
 def load_from_file():
 
@@ -10,7 +10,7 @@ def load_from_file():
     for y in range(60):
         line = f.readline()
         line =line.strip()
-        for x in range(80):
+        for x in range(160):
               live[x][y] = int(line[x])
               new_generation[x][y] = 0
               cell[x][y] = canvas.create_oval((x*10, y*10, x*10+10, y*10+10), outline="gray", fill="black")
@@ -21,7 +21,7 @@ def statystic():
 
 def process():
     for y in range(0,60):
-        for x in range(0,80):
+        for x in range(0,160):
             lives = live_neighbors(x,y)
 
             if live[x][y] == 1 and (lives < 2 or lives > 3): new_generation[x][y] = 0
@@ -30,7 +30,7 @@ def process():
 
     if statystic(): exit()
     for y in range(60):
-        for x in range(80):
+        for x in range(160):
             live[x][y] = new_generation[x][y]
 
 
@@ -38,7 +38,7 @@ def live_neighbors(a,b):
     lives = 0
     for i in range(-1,2):
         for j in range(-1,2):
-           if a+i > -1 and a+i < 80 and b+i > -1 and b+i < 60:
+           if a+i > -1 and a+i < 160 and b+i > -1 and b+i < 60:
 
              if  i==0 and j==0:
                  pass
@@ -49,7 +49,7 @@ def live_neighbors(a,b):
 
 def draw():
     for y in range(60):
-        for x in range(80):
+        for x in range(160):
             if live[x][y]==0:
                 canvas.itemconfig(cell[x][y], fill="black")
             if live[x][y]==1:
