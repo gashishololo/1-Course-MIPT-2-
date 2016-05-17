@@ -104,7 +104,7 @@ if i==0:
 else:
     print('Граф не связный')
 
-#4 
+#4 и 5
 import networkx as nx
 import matplotlib.pyplot as plot
 
